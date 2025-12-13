@@ -1,0 +1,4 @@
+/* No extra CSS needed due to heavy Tailwind usage, but good to have for overrides */
+:host {
+    display: block;
+}

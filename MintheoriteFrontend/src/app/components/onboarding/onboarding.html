@@ -1,0 +1,182 @@
+<div
+    class="min-h-screen bg-[#020617] text-white flex flex-col items-center justify-center p-6 relative overflow-hidden font-inter">
+
+    <div class="absolute inset-0 z-0 opacity-40 pointer-events-none">
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-900/20 rounded-full blur-[120px]">
+        </div>
+        <div class="absolute inset-0"
+            style="background-image: radial-gradient(rgba(30, 58, 138, 0.3) 1px, transparent 1px); background-size: 40px 40px;">
+        </div>
+    </div>
+
+    <div class="w-full max-w-4xl relative z-10">
+
+        <div class="text-center mb-12 animate-fade-in-up">
+            <img [src]="rol === 'MENTOR' ? 'assets/img/mintheoritegoldlogo.png' : 'assets/img/mintheoriteglasslogo.png'"
+                alt="Mintheorite"
+                class="h-24 mx-auto mb-6 drop-shadow-[0_0_25px_rgba(255,255,255,0.1)] transition-transform hover:scale-105 duration-500">
+
+            <div class="flex justify-center gap-3">
+                <div *ngFor="let s of [1,2,3,4]" [class.bg-cyan-400]="step() >= s && rol !== 'MENTOR'"
+                    [class.bg-amber-400]="step() >= s && rol === 'MENTOR'" [class.bg-gray-800]="step() < s"
+                    class="w-3 h-3 rounded-full transition-colors duration-300">
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="bg-[#0f172a]/60 backdrop-blur-xl border border-white/5 rounded-3xl p-8 md:p-12 shadow-2xl animate-fade-in-up delay-100 min-h-[400px] flex flex-col justify-center relative overflow-hidden">
+
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent"
+                [class.via-cyan-500]="rol !== 'MENTOR'" [class.via-amber-500]="rol === 'MENTOR'" to-transparent
+                opacity-50></div>
+
+            <div *ngIf="step() === 1" class="text-center space-y-6">
+                <h1 class="text-3xl md:text-5xl font-bold tracking-tight">
+                    {{ rol === 'MENTOR' ? 'Guiar es trascender.' : 'Tu camino comienza ahora.' }}
+                </h1>
+                <p class="text-lg md:text-xl text-slate-400 max-w-lg mx-auto leading-relaxed">
+                    Hola, <span class="text-white font-semibold">{{ username }}</span>.
+                    {{ rol === 'MENTOR' ? 'Estamos listos para conectar tu experiencia con quienes la necesitan.' :
+                    'Mintheorite está diseñado para acelerar tu evolución académica.' }}
+                </p>
+                <button (click)="nextStep()"
+                    class="mt-8 px-8 py-4 rounded-xl font-bold tracking-wider uppercase transition-all transform hover:scale-105 hover:shadow-lg flex items-center gap-3 mx-auto"
+                    [class.bg-cyan-600]="rol !== 'MENTOR'" [class.hover-bg-cyan-500]="rol !== 'MENTOR'"
+                    [class.shadow-cyan-500-20]="rol !== 'MENTOR'" [class.bg-amber-600]="rol === 'MENTOR'"
+                    [class.hover-bg-amber-500]="rol === 'MENTOR'" [class.shadow-amber-500-20]="rol === 'MENTOR'">
+                    <span>Iniciar Configuración</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div *ngIf="step() === 2" class="space-y-8">
+                <h2 class="text-2xl font-semibold text-center text-slate-200">Selecciona tu Casa de Estudios</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div *ngFor="let uni of universities" (click)="selectUni(uni)"
+                        class="group p-6 rounded-2xl border border-white/5 bg-slate-900/50 hover:bg-slate-800 cursor-pointer transition-all hover:border-opacity-50 hover:shadow-lg flex items-center justify-between"
+                        [class.hover-border-cyan-400]="rol !== 'MENTOR'"
+                        [class.hover-border-amber-400]="rol === 'MENTOR'">
+                        <div>
+                            <span class="text-3xl font-bold block mb-1 group-hover:text-white transition-colors"
+                                [class.text-cyan-400]="rol !== 'MENTOR'" [class.text-amber-400]="rol === 'MENTOR'">{{
+                                uni.siglas }}</span>
+                            <span class="text-sm text-slate-500 group-hover:text-slate-300">{{ uni.nombre }}</span>
+                        </div>
+                        <svg class="w-6 h-6 text-slate-600 group-hover:text-white opacity-0 group-hover:opacity-100 transition-all transform translate-x-[-10px] group-hover:translate-x-0"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="step() === 3" class="max-w-md mx-auto w-full space-y-6">
+                <h2 class="text-2xl font-semibold text-center text-slate-200">Define tu Perfil Académico</h2>
+
+                <div class="space-y-2">
+                    <label class="text-xs uppercase tracking-widest text-slate-500 font-bold ml-1">Facultad</label>
+                    <div class="relative">
+                        <select [(ngModel)]="selectedFaculty" (change)="onFacultyChange()"
+                            class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-4 text-white appearance-none focus:outline-none focus:border-opacity-50 transition-colors cursor-pointer"
+                            [class.focus-border-cyan-400]="rol !== 'MENTOR'"
+                            [class.focus-border-amber-400]="rol === 'MENTOR'">
+                            <option [ngValue]="null" disabled>Selecciona Facultad</option>
+                            <option *ngFor="let fac of faculties" [ngValue]="fac">{{ fac.nombre }}</option>
+                        </select>
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-2 animate-fade-in" *ngIf="careers.length > 0">
+                    <label class="text-xs uppercase tracking-widest text-slate-500 font-bold ml-1">Carrera</label>
+                    <div class="relative">
+                        <select [(ngModel)]="selectedCareer" (change)="selectCareer(selectedCareer)"
+                            class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-4 text-white appearance-none focus:outline-none focus:border-opacity-50 transition-colors cursor-pointer"
+                            [class.focus-border-cyan-400]="rol !== 'MENTOR'"
+                            [class.focus-border-amber-400]="rol === 'MENTOR'">
+                            <option [ngValue]="null" disabled>Selecciona Carrera</option>
+                            <option *ngFor="let car of careers" [ngValue]="car">{{ car.nombre }}</option>
+                        </select>
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="step() === 4" class="h-full flex flex-col">
+                <h2 class="text-2xl font-semibold text-center text-slate-200 mb-2">
+                    {{ rol === 'MENTOR' ? 'Especialidades' : 'Carga Académica' }}
+                </h2>
+                <p class="text-center text-slate-500 text-sm mb-6">
+                    {{ rol === 'MENTOR' ? '¿En qué materias puedes apoyar?' : 'Selecciona tus cursos actuales.' }}
+                </p>
+
+                <div class="flex-grow overflow-y-auto pr-2 space-y-2 max-h-[300px] mb-6 custom-scrollbar">
+                    <div *ngFor="let course of courses" (click)="toggleCourse(course)"
+                        class="p-4 rounded-xl border border-white/5 cursor-pointer flex items-center justify-between transition-all hover:bg-slate-800"
+                        [class.bg-slate-800]="isCourseSelected(course)"
+                        [class.border-cyan-500_50]="isCourseSelected(course) && rol !== 'MENTOR'"
+                        [class.border-amber-500_50]="isCourseSelected(course) && rol === 'MENTOR'">
+
+                        <div>
+                            <span class="block font-medium text-slate-200">{{ course.nombre }}</span>
+                            <span class="text-xs text-slate-500">Ciclo {{ course.ciclo }}</span>
+                        </div>
+
+                        <div class="w-6 h-6 rounded-full border border-slate-600 flex items-center justify-center transition-colors"
+                            [class.bg-cyan-500]="isCourseSelected(course) && rol !== 'MENTOR'"
+                            [class.border-cyan-500]="isCourseSelected(course) && rol !== 'MENTOR'"
+                            [class.bg-amber-500]="isCourseSelected(course) && rol === 'MENTOR'"
+                            [class.border-amber-500]="isCourseSelected(course) && rol === 'MENTOR'">
+                            <svg *ngIf="isCourseSelected(course)" class="w-4 h-4 text-black" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button (click)="completeOnboarding()" [disabled]="selectedCourses.length === 0"
+                        class="px-10 py-3 rounded-full font-bold uppercase tracking-wider transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                        [class.bg-cyan-600]="rol !== 'MENTOR'" [class.hover-bg-cyan-500]="rol !== 'MENTOR'"
+                        [class.text-white]="rol !== 'MENTOR'" [class.bg-amber-600]="rol === 'MENTOR'"
+                        [class.hover-bg-amber-500]="rol === 'MENTOR'" [class.text-black]="rol === 'MENTOR'">
+                        Finalizar
+                    </button>
+                </div>
+            </div>
+
+            <div *ngIf="step() === 5" class="text-center flex flex-col items-center justify-center h-[300px]">
+                <div class="relative w-16 h-16 mb-8">
+                    <div class="absolute inset-0 rounded-full border-4 border-t-transparent animate-spin"
+                        [class.border-cyan-500]="rol !== 'MENTOR'" [class.border-amber-500]="rol === 'MENTOR'"></div>
+                </div>
+                <h2 class="text-2xl font-bold text-white mb-2">Configurando Perfil</h2>
+                <p class="text-slate-400">Te estamos preparando el entorno...</p>
+
+                <button (click)="forceFinish()"
+                    class="mt-8 text-xs text-slate-600 hover:text-white uppercase tracking-widest transition-colors">
+                    Si tarda demasiado, haz clic aquí
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

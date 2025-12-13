@@ -1,0 +1,431 @@
+<div class="brand-trigger-btn" (click)="toggleMenu()">
+    <img src="assets/img/logomintheoritewhite.png" alt="Menu Trigger">
+</div>
+
+<div class="profile-wrapper" (mouseenter)="true" (mouseleave)="true">
+    <div class="profile-container" (click)="openProfile()">
+        <div class="profile-circle profile-glow" [class.has-image]="!!profilePic">
+            <img *ngIf="profilePic" [src]="profilePic" alt="Profile" class="profile-img">
+            <span *ngIf="!profilePic">{{ firstName.charAt(0).toUpperCase() }}</span>
+        </div>
+    </div>
+
+    <div class="profile-tooltip">
+        <div class="tooltip-content">
+            <p class="tooltip-name">{{ firstName }}</p>
+            <p class="tooltip-email">{{ userData?.email }}</p>
+            <div class="tooltip-hint">Click to expand</div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" *ngIf="isProfileOpen" (click)="closeProfile()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h2>{{ isEditing ? 'Editando Perfil' : 'Perfil' }}</h2>
+            <button class="close-btn" (click)="closeProfile()">
+                <svg viewBox="0 0 24 24" fill="none" class="w-6 h-6 stroke-current">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <div class="profile-left">
+                <div class="large-profile-pic">
+                    <img *ngIf="imagePreview || profilePic" [src]="imagePreview || profilePic" class="full-img">
+                    <span *ngIf="!imagePreview && !profilePic" class="placeholder-text">{{
+                        firstName.charAt(0).toUpperCase() }}</span>
+
+                    <label *ngIf="isEditing" class="upload-overlay">
+                        <input type="file" (change)="onImageSelected($event)" accept="image/*" hidden>
+                        <span>Cambiar Imagen</span>
+                    </label>
+                </div>
+                <div class="role-badge" [ngClass]="userRole === 'ESTUDIANTE' ? 'badge-cyan' : 'badge-gold'">
+                    {{ userRole }}
+                </div>
+            </div>
+
+            <div class="profile-details">
+                <div class="details-header" *ngIf="!isEditing">
+                    <h3>{{ userData?.first_name }} {{ userData?.last_name }}</h3>
+                    <p class="email-text">{{ userData?.email }}</p>
+                    <p class="bio-text" *ngIf="userData?.perfil?.biografia">"{{ userData.perfil.biografia }}"</p>
+                    <p class="bio-placeholder" *ngIf="!userData?.perfil?.biografia">Sin biografía establecida.</p>
+                </div>
+
+                <div class="edit-form" *ngIf="isEditing">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input [(ngModel)]="editData.first_name" placeholder="Nombre">
+                    </div>
+                    <div class="form-group">
+                        <label>Biografía</label>
+                        <textarea [(ngModel)]="editData.biografia" placeholder="Breve descripción..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input [(ngModel)]="editData.telefono" placeholder="+51 ...">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>LinkedIn</label>
+                            <input [(ngModel)]="editData.linkedin" placeholder="URL Profile">
+                        </div>
+                        <div class="form-group">
+                            <label>GitHub</label>
+                            <input [(ngModel)]="editData.github" placeholder="URL Profile">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-grid" *ngIf="!isEditing">
+                    <div class="info-item">
+                        <span class="label">Teléfono</span>
+                        <span class="value">{{ userData?.perfil?.telefono || 'No registrado' }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Carrera</span>
+                        <span class="value">{{ userData?.perfil?.carrera_nombre || 'Sin Carrera' }}</span>
+                    </div>
+                    <div class="info-item" *ngIf="userData?.perfil?.linkedin">
+                        <span class="label">LinkedIn</span>
+                        <a [href]="userData.perfil.linkedin" target="_blank" class="link-value">Ver Perfil</a>
+                    </div>
+                    <div class="info-item" *ngIf="userData?.perfil?.github">
+                        <span class="label">GitHub</span>
+                        <a [href]="userData.perfil.github" target="_blank" class="link-value">Ver Perfil</a>
+                    </div>
+                </div>
+
+                <div class="stats-section" *ngIf="!isEditing">
+                    <div class="section-title">Progreso Académico</div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon cyan">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value">{{ userData?.perfil?.stats_quizzes_aprobados || 0 }}</div>
+                                <div class="stat-label">Quizzes Aprobados</div>
+                                <div class="stat-sub" *ngIf="userData?.perfil?.stats_promedio_global">
+                                    Avg. {{ userData.perfil.stats_promedio_global }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon purple">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value">{{ userData?.perfil?.stats_sesiones_recibidas || 0 }}</div>
+                                <div class="stat-label">Sesiones Recibidas</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card full-width">
+                            <div class="stat-header">
+                                <div class="stat-icon gold">
+                                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                    </svg>
+                                </div>
+                                <div class="stat-info">
+                                    <div class="stat-label">Objetivo Actual</div>
+                                    <div class="stat-value-sm">{{ userData?.perfil?.objetivo_display || 'Sin Misión
+                                        Activa' }}</div>
+                                </div>
+                            </div>
+                            <div class="mission-bar-container" *ngIf="userData?.perfil?.objetivo_display">
+                                <div class="mission-bar" style="width: 60%"></div>
+                                <span class="mission-text">Progreso Estimado (60%)</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card full-width">
+                            <div class="stat-header">
+                                <div class="stat-icon green">
+                                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                    </svg>
+                                </div>
+                                <div class="stat-info">
+                                    <div class="stat-label">Aportes a la Comunidad</div>
+                                    <div class="stat-row">
+                                        <span class="stat-value-sm">{{ userData?.perfil?.stats_aportes_repo || 0 }}
+                                            Aportes</span>
+                                        <span class="divider">•</span>
+                                        <span class="stat-karma">{{ userData?.perfil?.puntos_reputacion || 0 }}
+                                            Karma</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-ghost" *ngIf="isEditing" (click)="toggleEdit()">Cancelar</button>
+            <button class="btn-primary" *ngIf="!isEditing" (click)="toggleEdit()">Editar Perfil</button>
+            <button class="btn-primary" *ngIf="isEditing" (click)="saveProfile()">Guardar Cambios</button>
+        </div>
+    </div>
+</div>
+
+<div class="mega-menu-overlay" [class.open]="isMenuOpen">
+    <div class="menu-grid">
+        <ng-container *ngIf="userRole === 'ESTUDIANTE'">
+            <a class="menu-item role-student" (click)="setView('FORO')">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                    </path>
+                </svg>
+                <span>Foro Mintheorite</span>
+            </a>
+            <a class="menu-item role-student" (click)="setView('MENTOR')">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <span>Buscar Mentor</span>
+            </a>
+            <a class="menu-item role-student">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                    </path>
+                </svg>
+                <span>Mis Sesiones</span>
+            </a>
+            <a class="menu-item role-student" (click)="setView('SOLICITUD')">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                    </path>
+                </svg>
+                <span>Solicitud Rápida</span>
+            </a>
+
+            <a class="menu-item role-student">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z">
+                    </path>
+                </svg>
+                <span>Explorar Repositorio</span>
+            </a>
+            <a class="menu-item role-student">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
+                </svg>
+                <span>Materiales Guardados</span>
+            </a>
+            <a class="menu-item role-student">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span>Simuladores</span>
+            </a>
+
+            <a class="menu-item role-student" (click)="setView('CARGA')">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+                <span>Mi Carga Académica</span>
+            </a>
+            <a class="menu-item role-student">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                    </path>
+                </svg>
+                <span>Nivel y Progreso</span>
+            </a>
+        </ng-container>
+
+        <a (click)="logout()" class="menu-item" style="margin-top: auto;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                </path>
+            </svg>
+            <span>Cerrar Sesión</span>
+        </a>
+
+    </div>
+</div>
+
+<div class="dashboard-content px-6 md:px-12" [ngSwitch]="activeView">
+    <div class="mb-12" *ngIf="!loading && activeView === 'HOME'">
+        <h1 class="text-2xl md:text-3xl font-light tracking-tight text-white mb-2">
+            {{ greeting }},
+            <span class="font-bold" [class.text-cyan-400]="userRole === 'ESTUDIANTE'"
+                [class.text-amber-400]="userRole === 'MENTOR'">
+                {{ firstName }}
+            </span>
+        </h1>
+        <p class="text-gray-500 text-lg">
+            {{ userRole === 'ESTUDIANTE' ? 'El conocimiento es poder. Continúa tu camino.' : 'La sabiduría compartida se
+            multiplica. Gracias por guiar.' }}
+        </p>
+    </div>
+
+    <div *ngSwitchCase="'HOME'" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="glass-card md:col-span-2">
+            <h3 class="text-xl font-semibold mb-4 text-white">Novedades del Campus</h3>
+            <div class="h-2 bg-gray-800 rounded w-1/3 mb-4"></div>
+            <div class="h-2 bg-gray-800 rounded w-2/3 mb-2"></div>
+            <div class="h-2 bg-gray-800 rounded w-1/2"></div>
+        </div>
+
+        <div class="glass-card">
+            <h3 class="text-xl font-semibold mb-4 text-white">Estado Actual</h3>
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-12 h-12 rounded-full bg-cyan-900/30 text-cyan-400 flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <div class="text-2xl font-bold">Nivel 5</div>
+                    <div class="text-xs text-gray-500">Explorer</div>
+                </div>
+            </div>
+            <div class="h-2 bg-gray-800 rounded-full overflow-hidden">
+                <div class="h-full bg-cyan-500 w-2/3"></div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h3 class="text-xl font-semibold mb-4 text-white">Actividad Reciente</h3>
+            <ul class="space-y-4">
+                <li class="flex items-center gap-3 text-sm text-gray-400">
+                    <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                    Login detectado
+                </li>
+                <li class="flex items-center gap-3 text-sm text-gray-400">
+                    <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                    Recurso guardado
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="'FORO'" class="fade-in">
+        <h2 class="text-2xl font-bold text-white mb-6">Muro de Conocimiento</h2>
+        <div class="forum-feed">
+            <div class="glass-card forum-card" *ngFor="let post of forumPosts">
+                <div class="forum-header">
+                    <div class="forum-tags">
+                        <span class="tag">{{ post.tags }}</span>
+                    </div>
+                    <span class="time">{{ post.time }}</span>
+                </div>
+                <h4 class="post-title">{{ post.title }}</h4>
+                <div class="post-meta">
+                    <span class="author">por {{ post.author }}</span>
+                    <div class="stats">
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
+                                </path>
+                            </svg>
+                            {{ post.votes }}
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                </path>
+                            </svg>
+                            {{ post.views }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="'MENTOR'" class="fade-in">
+        <h2 class="text-2xl font-bold text-white mb-6">Buscar Mentor</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="glass-card mentor-card" *ngFor="let mentor of mentors">
+                <div class="mentor-avatar">{{ mentor.name.charAt(0) }}</div>
+                <h3 class="mentor-name">{{ mentor.name }}</h3>
+                <p class="mentor-spec">{{ mentor.spec }}</p>
+                <div class="mentor-stats">
+                    <span class="flex items-center gap-1 text-amber-400">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                            </path>
+                        </svg>
+                        {{ mentor.rating }}
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                            </path>
+                        </svg>
+                        {{ mentor.students }} alumnos
+                    </span>
+                </div>
+                <button class="btn-primary" style="width: 100%; margin-top: 1rem;">Solicitar Mentoría</button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="'SOLICITUD'" class="fade-in container-narrow">
+        <h2 class="text-2xl font-bold text-white mb-6">Solicitud Rápida</h2>
+        <div class="glass-card p-8">
+            <p class="text-gray-400 mb-4">Lanza una bengala al foro. Los mentores y compañeros verán esto destacado.</p>
+            <textarea [(ngModel)]="requestContent" class="w-full h-32"></textarea>
+            <button class="btn-primary mt-4" (click)="publishQuickRequest()">Lanzar Solicitud</button>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="'CARGA'" class="fade-in">
+        <h2 class="text-2xl font-bold text-white mb-6">Mi Carga Académica</h2>
+        <div *ngIf="getKeys(academicLoad).length === 0" class="text-gray-500">
+            No tienes cursos inscritos.
+        </div>
+
+        <div *ngFor="let ciclo of getKeys(academicLoad)" class="mb-8">
+            <h3 class="text-xl text-cyan-400 mb-4 font-bold">Ciclo {{ ciclo }}</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="glass-card course-card" *ngFor="let curso of academicLoad[ciclo]">
+                    <div class="course-code">{{ curso.codigo }}</div>
+                    <div class="course-title">{{ curso.nombre }}</div>
+                    <div class="course-footer">
+                        <span>3 Créditos</span>
+                        <span class="status-dot"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

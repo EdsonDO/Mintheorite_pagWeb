@@ -1,0 +1,198 @@
+<div class="min-h-screen bg-black text-white font-sans selection:bg-white selection:text-black">
+
+    <!-- HEADER (Glassmorphism) -->
+    <header
+        class="fixed top-0 w-full z-50 transition-all duration-300 bg-black/10 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 py-8 flex justify-between items-center">
+            <!-- Left: Navigation (Desktop) -->
+            <nav class="hidden md:flex gap-10 items-center">
+                <a href="#features" class="nav-link">Misión</a>
+                <a href="#reviews" class="nav-link">Comunidad</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+            </nav>
+
+            <!-- Center: Logo -->
+            <div class="absolute left-1/2 transform -translate-x-1/2">
+                <img src="assets/img/logomintheoritewhite.png" alt="Mintheorite"
+                    class="h-14 md:h-20 opacity-90 hover:opacity-100 transition-opacity">
+            </div>
+
+            <!-- Right: Actions -->
+            <div class="flex items-center">
+                <button routerLink="/login"
+                    class="px-8 py-3 bg-white text-black font-bold text-lg rounded-full hover:scale-105 transition-transform duration-300 shadow-[0_0_15px_rgba(255,255,255,0.4)] font-sans uppercase tracking-widest">
+                    Acceder
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative h-screen flex flex-col items-center justify-center text-center px-4 pt-20">
+        <!-- Abstract Background -->
+        <!-- Lava Background -->
+        <div class="lava-container">
+            <div class="lava-blob"></div>
+            <div class="lava-blob"></div>
+            <div class="lava-blob"></div>
+            <div class="lava-blob"></div>
+        </div>
+
+        <div
+            class="z-10 w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-12 items-center text-left animate-fade-in-up">
+
+            <!-- LEFT COLUMN: CTA -->
+            <div class="space-y-8">
+                <h1 class="text-5xl md:text-7xl font-bold tracking-tighter leading-tight">
+                    GESTIÓN ACADÉMICA <br>
+                    <span
+                        class="text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-600">REIMAGINADA</span>
+                </h1>
+                <p class="text-xl text-gray-400 max-w-lg font-light leading-relaxed min-h-[5rem]">
+                    <span class="typing-cursor">{{ displayedText }}</span>
+                </p>
+
+                <div class="flex flex-col md:flex-row gap-4 justify-start mt-8">
+                    <button routerLink="/join"
+                        class="px-8 py-4 bg-white text-black font-bold text-lg rounded-sm hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                        UNIRSE A LA RED
+                    </button>
+                    <button
+                        class="px-8 py-4 bg-transparent border border-gray-700 text-gray-300 font-bold text-lg rounded-sm hover:bg-white/5 hover:border-white transition-all">
+                        CONOCER MÁS
+                    </button>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: ICON & TITLE -->
+            <div class="flex flex-col items-center justify-center space-y-6">
+                <!-- Giant Icon -->
+                <img src="assets/img/mintheoriteglasslogo.png" alt="Icon"
+                    class="w-72 md:w-96 opacity-100 animate-glow-pulse">
+
+                <!-- Elegant Title -->
+                <div class="text-center space-y-2">
+                    <h2
+                        class="text-4xl font-serif tracking-widest text-white border-b border-white/20 pb-2 inline-block">
+                        MINTHEORITE</h2>
+                    <p class="text-lg text-white uppercase tracking-[0.2em]">Knowledge • Networking • Growth</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-gray-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+        </div>
+    </section>
+
+    <!-- FEATURES / PRESENTATION -->
+    <section id="features" class="py-24 bg-black border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="kinetic-grid border border-white/10 rounded-lg overflow-hidden">
+
+                <!-- Card 1 -->
+                <div class="kinetic-card group">
+                    <span class="kinetic-number">01</span>
+                    <div class="kinetic-info">
+                        <h3 class="kinetic-title">Mentoría</h3>
+                        <p class="kinetic-desc">
+                            Conecta con expertos verificados. <br>
+                            Resuelve dudas en tiempo real y eleva tu nivel académico.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="kinetic-card group">
+                    <span class="kinetic-number">02</span>
+                    <div class="kinetic-info">
+                        <h3 class="kinetic-title">Comunidad</h3>
+                        <p class="kinetic-desc">
+                            Espacios de debate, foros exclusivos y recursos compartidos por facultad.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="kinetic-card group">
+                    <span class="kinetic-number">03</span>
+                    <div class="kinetic-info">
+                        <h3 class="kinetic-title">Gestión</h3>
+                        <p class="kinetic-desc">
+                            Dashboard académico integral. <br>
+                            Tus notas, proyectos y metas en un solo lugar.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- REVIEWS (ARROW DESIGN) -->
+    <section id="reviews" class="py-32 bg-black border-t border-white/10 overflow-hidden relative">
+        <div class="max-w-6xl mx-auto px-6 space-y-24">
+
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold tracking-tight text-white mb-2">VOCES DE LA RED</h2>
+                <div class="w-24 h-1 bg-white mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Review 1 (Left to Right) -->
+            <div class="review-row">
+                <div class="review-avatar">S</div>
+                <div class="review-card">
+                    <!-- Stars appear here -->
+                    <div class="review-stars text-yellow-400 text-xl">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <p class="text-xl text-gray-200 mb-2">"La conexión neuronal con los mentores es instantánea.
+                        Mintheorite no es una plataforma, es un upgrade cerebral."</p>
+                    <div class="text-sm text-gray-500 font-bold uppercase tracking-widest">
+                        SARAH K. // <span class="text-white">BIOINGENIERÍA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review 2 (Right to Left) -->
+            <div class="review-row reverse">
+                <div class="review-avatar">M</div>
+                <div class="review-card">
+                    <div class="review-stars text-yellow-400 text-xl">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <p class="text-xl text-gray-200 mb-2">"Antes mi workflow era un caos. Ahora gestiono mis proyectos
+                        con la precisión de un cirujano."</p>
+                    <div class="text-sm text-gray-500 font-bold uppercase tracking-widest">
+                        MIGUEL R. // <span class="text-white">ARQUITECTURA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review 3 (Left to Right) -->
+            <div class="review-row">
+                <div class="review-avatar">A</div>
+                <div class="review-card">
+                    <div class="review-stars text-yellow-400 text-xl">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+                    </div>
+                    <p class="text-xl text-gray-200 mb-2">"La interfaz desaparece. Solo quedas tú y el conocimiento. Es
+                        la experiencia más pura de aprendizaje que he tenido."</p>
+                    <div class="text-sm text-gray-500 font-bold uppercase tracking-widest">
+                        ALEXA D. // <span class="text-white">DERECHO</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <app-footer></app-footer>
+
+</div>

@@ -1,0 +1,33 @@
+<nav class="bg-gray-900 border-b border-cyan-900/50 px-6 py-4 flex justify-between items-center shadow-lg">
+    <div class="flex items-center gap-4">
+        <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-500">
+            MINTHEORITE
+        </h1>
+        <div class="h-6 w-px bg-gray-700"></div>
+        <div class="flex gap-4 text-sm text-gray-400">
+            <a routerLink="/app" class="hover:text-cyan-400 transition-colors cursor-pointer">Dashboard</a>
+            <a href="#" class="hover:text-cyan-400 transition-colors">Cursos</a>
+            <a href="#" class="hover:text-cyan-400 transition-colors">Foro</a>
+        </div>
+    </div>
+
+    <div class="flex items-center gap-4">
+        <div class="text-right hidden md:block">
+            <p class="text-sm font-bold text-white">{{ displayName || username }}</p>
+            <p class="text-xs text-cyan-500">Estudiante</p>
+        </div>
+        <div class="h-10 w-10 rounded-full bg-gradient-to-tr from-cyan-500 to-purple-600 p-0.5">
+            <div class="h-full w-full rounded-full bg-gray-900 flex items-center justify-center text-white font-bold">
+                {{ (displayName || username).charAt(0).toUpperCase() }}
+            </div>
+        </div>
+        <button (click)="logout()" class="text-gray-500 hover:text-red-400 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" x2="9" y1="12" y2="12" />
+            </svg>
+        </button>
+    </div>
+</nav>

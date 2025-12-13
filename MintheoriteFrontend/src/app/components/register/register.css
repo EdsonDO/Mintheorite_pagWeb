@@ -1,0 +1,133 @@
+/* Custom Animations for Register Component (Matches Login) */
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-4px);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(4px);
+    }
+}
+
+.animate-shake {
+    animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Specific Focus Styles for modern inputs */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #0f0f10 inset !important;
+    -webkit-text-fill-color: white !important;
+    caret-color: white !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* LAVA LAMP BACKGROUND (Global Page Level) */
+.lava-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: black;
+    z-index: 0;
+}
+
+.lava-blob {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+    mix-blend-mode: screen;
+    filter: blur(60px);
+    /* Heavy blur for atmosphere */
+    opacity: 0.15;
+    /* MINIMUM OPACITY: Ghostly effect */
+    animation: drift 15s infinite alternate ease-in-out;
+}
+
+.lava-blob:nth-child(1) {
+    width: 700px;
+    height: 700px;
+    top: 10%;
+    left: 20%;
+    animation-duration: 30s;
+    animation-delay: -5s;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.lava-blob:nth-child(2) {
+    width: 500px;
+    height: 500px;
+    top: 60%;
+    left: 70%;
+    animation-duration: 25s;
+    animation-delay: -2s;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.lava-blob:nth-child(3) {
+    width: 600px;
+    height: 600px;
+    top: 30%;
+    left: 80%;
+    animation-duration: 28s;
+    animation-delay: -7s;
+}
+
+.lava-blob:nth-child(4) {
+    width: 400px;
+    height: 400px;
+    top: 70%;
+    left: 10%;
+    animation-duration: 22s;
+    animation-delay: -4s;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+@keyframes drift {
+    0% {
+        transform: translate(-20%, -20%) scale(1);
+    }
+
+    50% {
+        transform: translate(20%, 10%) scale(1.1);
+    }
+
+    100% {
+        transform: translate(-10%, 20%) scale(0.9);
+    }
+}
