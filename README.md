@@ -1,6 +1,6 @@
 # ☄️ Mintheorite
 <p align="center">
-  <img src="assets/MintheoriteLogoOfficial.png" alt="Mintheorite Logo">
+  <img src="assets/MintheoriteLogoOfficial.png" alt="Mintheorite Logo" width="300">
 </p>
 
 Bienvenido a **Mintheorite**, la plataforma educativa de próxima generación diseñada para conectar Estudiantes y Mentores en un entorno de aprendizaje dinámico, estético y (Esperemos) gamificado.
