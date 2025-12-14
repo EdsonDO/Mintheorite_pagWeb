@@ -6,7 +6,7 @@
 Bienvenido a **Mintheorite**, la plataforma educativa de próxima generación diseñada para conectar Estudiantes y Mentores en un entorno de aprendizaje dinámico, estético y (Esperemos) gamificado.
 ---
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
@@ -17,41 +17,41 @@ Bienvenido a **Mintheorite**, la plataforma educativa de próxima generación di
 
 Este proyecto está construido sobre cimientos sólidos y modernos:
 
-### 🐍 Backend: Django (Python)
+###  Backend: Django (Python)
 - **Framework**: Django 6.0 (Bleeding Edge)
 - **API**: Django Rest Framework (DRF)
 - **Seguridad**: Autenticación por Tokens + Variables de Entorno (.env) 🔒
 - **Base de Datos**: SQLite3 (Desarrollo) / Postgres (Producción - Ready)
 
-### 🅰️ Frontend: Angular
+### Frontend: Angular
 - **Framework**: Angular 21 (Moderno y Rápido)
 - **Estilos**: TailwindCSS v3 + Estilos personalizados Cyber-estéticos 🎨
 - **Arquitectura**: Component-based con Módulos Lazy Loaded
 
 ---
 
-## 🌟 Características Principales
+## Características Principales
 
-### 🎓 Para Estudiantes (Mentees)
+### Para Estudiantes (Mentees)
 - **Dashboard Interactivo**: Visualiza tu progreso, mentorías próximas y logros.
 - **Búsqueda de Mentores**: Encuentra guías expertos en tus áreas de interés.
 - **Gamificación**: Gana insignias y sube de nivel mientras aprendes.
 
-### 🧠 Para Mentores
+### Para Mentores
 - **Gestión de Sesiones**: Organiza tu agenda y tus sesiones de mentoría.
 - **Perfiles Personalizables**: Muestra tu experiencia y especialidades.
 - **Feedback Directo**: Ayuda a tus estudiantes a crecer con retroalimentación precisa.
 
 ---
 
-## 🚀 Instalación y Despliegue
+## Instalación y Despliegue
 
 ### Requisitos Previos
 - Python 3.10+
 - Node.js 18+
 - Angular CLI
 
-### 1️⃣ Backend Setup
+### Backend Setup
 ```bash
 cd MintheoriteBackend
 # Crear entorno virtual (opcional pero recomendado)
@@ -69,7 +69,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-### 2️⃣ Frontend Setup
+### Frontend Setup
 ```bash
 cd MintheoriteFrontend
 # Instalar paquetes
@@ -83,7 +83,7 @@ Visita `http://localhost:4200/` y listo...
 
 ---
 
-## 🛡️ Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 Mintheorite/
@@ -99,7 +99,7 @@ Mintheorite/
 
 ---
 
-## 🤝 Contribución
+## Contribución
 
 Este proyecto es privado por ahora. Contacta a **Edson** para acceso.
 Si vas a contribuir:
